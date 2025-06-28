@@ -1,0 +1,68 @@
+/* В src/index.css или src/App.css */
+:root {
+  /* Основные цвета */
+  --pastel-primary: #a7c7e7;   /* Нежно-голубой (для акцентов, кнопок) */
+  --pastel-secondary: #fdd7aa; /* Нежно-персиковый (для других акцентов) */
+  --pastel-success: #c1e1c1;   /* Нежно-зеленый (для успеха, "Мне всё нравится") */
+  --pastel-warning: #ffe0b2;   /* Нежно-оранжевый/желтый (для "Изменить") */
+  --pastel-danger: #f8caca;    /* Нежно-розовый (для удаления, ошибок) */
+  --pastel-info: #b2dfdb;
+  --pastel-info-darker: #80cbc4;
+  --text-on-pastel-info: #004d40;      /* Нежно-мятный (для информационных сообщений) */
+  --pastel-secondary-lighter: #fff5eb;
+  --pastel-secondary-darker: #fca760; 
+
+
+
+
+  --background-body: #c6d3df; /* Очень светлый, почти белый с оттенком */
+  --background-main-content: #ffffff; /* Белый для основных блоков контента */
+  --background-conversation: #ffffff; /* Очень светло-серый/голубой для чата */
+  --background-input-area: #ffffff;
+  --background-modal: #ffffff;
+  
+  /* Текст */
+  --text-dark: #4a5568;  /* Темно-серый, но не черный */
+  --text-medium: #718096; /* Средне-серый */
+  --text-light: #ffffff;  /* Белый (для темных кнопок, если будут) */
+  --text-on-pastel-primary: #2c3e50; /* Текст на основной пастельной кнопке (темный для читаемости) */
+  --text-on-pastel-success: #388e3c; /* Текст на зеленой кнопке */
+
+
+  /* Границы и тени */
+  --border-color: #dce4ec;
+  --box-shadow-soft: 0 2px 5px rgba(0, 0, 0, 0.06);
+  --box-shadow-medium: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+  /* Радиусы скругления */
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
+
+  /* Шрифты (если ты их подключил) */
+  --font-primary: 'Roboto', sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content-wrapper {
+  max-width: 1280px; /* Ваша контентная ширина */
+  width: 100%; /* Чтобы занимал доступную ширину до max-width */
+  margin: 0 auto;  /* Центрирование */
+  padding: 1.5rem 2rem; /* Внутренние отступы для контента (бывшие 2rem с #root) */
+  flex-grow: 1; /* Чтобы занимал оставшееся место по высоте */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-body);
+  font-family: var(--font-primary);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
