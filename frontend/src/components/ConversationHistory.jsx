@@ -1,14 +1,13 @@
-// frontend/src/components/ConversationHistory.jsx
 import React from 'react';
 
-// Пропсы onFinalizeRoute и onEditRouteRequest передаются из HomePage
+
 function ConversationHistory({ conversation, onFinalizeRoute, onEditRouteRequest }) {
     
-    // Общие стили для контейнера сообщений
+    
     const messageContainerBaseStyle = {
         padding: '12px 18px',
         margin: '10px 0',
-        maxWidth: '78%', // Максимальная ширина сообщения
+        maxWidth: '78%', 
         wordBreak: 'break-word',
         boxShadow: 'var(--box-shadow-soft)',
         lineHeight: '1.55',
@@ -19,14 +18,14 @@ function ConversationHistory({ conversation, onFinalizeRoute, onEditRouteRequest
         if (item.type === 'user') {
             return (
                 <div 
-                    key={`${index}-user-${item.text.slice(0,10)}`} // Более уникальный ключ
+                    key={`${index}-user-${item.text.slice(0,10)}`} 
                     style={{
                         ...messageContainerBaseStyle,
                         alignSelf: 'flex-end',
-                        backgroundColor: 'var(--pastel-primary)', // Яркий синий для пользователя
+                        backgroundColor: 'var(--pastel-primary)', 
                         color: 'var(--text-on-pastel-primary)',
                         borderRadius: 'var(--border-radius-lg) var(--border-radius-lg) var(--border-radius-sm) var(--border-radius-lg)', 
-                        marginLeft: 'auto', // Прижимаем к правому краю
+                        marginLeft: 'auto', 
                     }}
                 >
                     {item.text}
@@ -36,11 +35,11 @@ function ConversationHistory({ conversation, onFinalizeRoute, onEditRouteRequest
              const systemMessageStyle = {
                  ...messageContainerBaseStyle,
                  alignSelf: 'flex-start',
-                 backgroundColor: item.isError ? 'var(--pastel-danger)' : 'var(--background-main-content)', // Светло-красный для ошибок, светло-серый для обычных
+                 backgroundColor: item.isError ? 'var(--pastel-danger)' : 'var(--background-main-content)', 
                  color: item.isError ? '#a94442' : 'var(--text-dark)',
                  border: item.isError ? '1px solid #ebccd1': '1px solid var(--border-color)', 
                  borderRadius: 'var(--border-radius-lg) var(--border-radius-lg) var(--border-radius-lg) var(--border-radius-sm)', 
-                 marginRight: 'auto', // Прижимаем к левому краю
+                 marginRight: 'auto', 
              };
              return (
                  <div key={`${index}-system-${item.text.slice(0,10)}`} style={systemMessageStyle}>
@@ -48,23 +47,23 @@ function ConversationHistory({ conversation, onFinalizeRoute, onEditRouteRequest
                  </div>
              );
         } else if (item.type === 'system_route') {
-             const route = item.data; // Это объект RouteDetailsResponse или FullRouteDetailsResponse
+             const route = item.data; 
              
              return (
                  <div 
-                    key={`${index}-route-${route.route_id}`} // Уникальный ключ для маршрута
+                    key={`${index}-route-${route.route_id}`} 
                     style={{ 
-                        alignSelf: 'stretch', // Растягиваем на всю доступную ширину
+                        alignSelf: 'stretch', 
                         backgroundColor: 'var(--background-main-content)',
-                        color: 'var(--text-dark)',      // Темно-синий текст
+                        color: 'var(--text-dark)',      
                         border: '1px solid var(--border-color)',
-                        borderRadius: 'var(--border-radius-md)', // Более выраженное скругление
+                        borderRadius: 'var(--border-radius-md)', 
                         padding: '20px',
                         margin: '15px 0',
                         boxShadow: 'var(--box-shadow-medium)',
                     }}
                  >
-                     {/* Убираем ID из заголовка для пользователя */}
+                     
                      <h4 style={{ margin: '0 0 12px 0', color: '#0d47a1', fontSize: '1.2em', borderBottom: '1px solid #90caf9', paddingBottom: '8px' }}>
                         Ваш маршрут готов!
                      </h4>
@@ -82,15 +81,15 @@ function ConversationHistory({ conversation, onFinalizeRoute, onEditRouteRequest
                          overflowX: 'auto',
                          whiteSpace: 'pre-wrap',
                          wordWrap: 'break-word',
-                         backgroundColor: 'var(--background-conversation)', // Белый фон для текста маршрута
+                         backgroundColor: 'var(--background-conversation)', 
                          padding: '15px',
                          borderRadius: 'var(--border-radius-sm)',
                          border: '1px solid var(--border-color)',
                          fontSize: '0.9em',
-                         color: 'var(--text-dark)', // Текст темнее для лучшей читаемости
-                         maxHeight: '400px', // Увеличил максимальную высоту
+                         color: 'var(--text-dark)', 
+                         maxHeight: '400px', 
                          overflowY: 'auto',
-                         lineHeight: '1.7', // Увеличил межстрочный интервал в pre
+                         lineHeight: '1.7', 
                      }}>
                          {route.route_text}
                      </pre>
@@ -129,7 +128,7 @@ function ConversationHistory({ conversation, onFinalizeRoute, onEditRouteRequest
           display: 'flex', 
           flexDirection: 'column', 
           width: '100%',
-          padding: '0 10px' // Небольшой отступ для самих сообщений от краев контейнера
+          padding: '0 10px' 
         }}
       >
         {conversation.map(renderMessage)}

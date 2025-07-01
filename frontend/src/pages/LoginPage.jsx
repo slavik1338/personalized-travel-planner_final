@@ -1,18 +1,16 @@
-// frontend/src/pages/LoginPage.jsx
-
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Для перехода между страницами
+import { Link, useNavigate } from 'react-router-dom'; 
 
-// TODO: Define API_BASE_URL (or get it from App.jsx)
+
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 
-function LoginPage({ onLoginSuccess }) { // onLoginSuccess - функция, которая будет вызвана при успешном входе
+function LoginPage({ onLoginSuccess }) { 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const navigate = useNavigate(); // Hook для программного перехода между страницами
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,7 +41,7 @@ function LoginPage({ onLoginSuccess }) { // onLoginSuccess - функция, к�
       }
 
     } catch (err) {
-      // Обработка сетевых ошибок
+      
       setError(`Network error: ${err.message}`);
       console.error("Fetch error:", err);
     } finally {

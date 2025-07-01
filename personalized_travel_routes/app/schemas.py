@@ -106,9 +106,6 @@ class ReviewCreate(ReviewBase):
 
     @model_validator(mode='after')
     def check_exclusive_target(cls, values):
-        # В Pydantic v2 model_validator получает саму модель (или её данные)
-        # values здесь будет экземпляром ReviewCreate или словарем, в зависимости от контекста
-        # Доступ к полям как к атрибутам, если values - это модель
         location_id = getattr(values, 'location_id', None)
         activity_id = getattr(values, 'activity_id', None)
 
@@ -158,4 +155,3 @@ class POIReplacementRequest(BaseModel):
 class POIAdditionRequest(BaseModel):
     item_type: str = Field(..., pattern="^(location|activity)$")
     item_id: int
-    #add_after_map_id: Optional[int] = None

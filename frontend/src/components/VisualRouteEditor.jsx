@@ -1,6 +1,5 @@
-// frontend/src/components/VisualRouteEditor.jsx
 import React, { useState, useEffect } from 'react';
-import POISearchModal from './POISearchModal'; // Убедись, что этот компонент существует и импортируется
+import POISearchModal from './POISearchModal'; 
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 
@@ -13,23 +12,23 @@ function VisualRouteEditor({ initialRouteData, onSaveChanges, onCancelEdit }) {
     const [routeData, setRouteData] = useState(initialRouteData);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(''); // Для временных сообщений об успехе
+    const [successMessage, setSuccessMessage] = useState(''); 
 
-    // Состояние для модального окна ЗАМЕНЫ POI: { map_id: int, current_name: str } | null
+    
     const [replacingPOIInfo, setReplacingPOIInfo] = useState(null); 
     
-    // Состояние для модального окна ДОБАВЛЕНИЯ POI: boolean
+    
     const [isAddingPOI, setIsAddingPOI] = useState(false);
 
     useEffect(() => {
         setRouteData(initialRouteData);
-        setError(null); // Сбрасываем ошибку при получении новых данных
-        setSuccessMessage(''); // Сбрасываем сообщение об успехе
+        setError(null); 
+        setSuccessMessage(''); 
     }, [initialRouteData]);
 
     const displaySuccessMessage = (message) => {
         setSuccessMessage(message);
-        setTimeout(() => setSuccessMessage(''), 3000); // Сообщение исчезнет через 3 секунды
+        setTimeout(() => setSuccessMessage(''), 3000); 
     };
 
     const handleDeletePoi = async (mapIdToDelete) => {
@@ -114,7 +113,7 @@ function VisualRouteEditor({ initialRouteData, onSaveChanges, onCancelEdit }) {
         onSaveChanges(routeData);
     };
     
-    if (!routeData || !initialRouteData) { // initialRouteData тоже нужен для сброса при отмене, если решим это делать
+    if (!routeData || !initialRouteData) { 
         return 
     }
 
@@ -126,7 +125,7 @@ function VisualRouteEditor({ initialRouteData, onSaveChanges, onCancelEdit }) {
         }}>
             <div style={{
                 backgroundColor: 'white', padding: '20px', borderRadius: '8px',
-                width: '90%', maxWidth: '750px', maxHeight: '90vh', // Немного увеличил ширину
+                width: '90%', maxWidth: '750px', maxHeight: '90vh', 
                 display: 'flex', flexDirection: 'column', boxShadow: '0 5px 15px rgba(0,0,0,0.2)'
             }}>
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eee', paddingBottom: '10px', marginBottom: '15px'}}>
@@ -164,14 +163,13 @@ function VisualRouteEditor({ initialRouteData, onSaveChanges, onCancelEdit }) {
                                         fontWeight: 'bold', 
                                         marginRight: '10px', 
                                         color: '#555', 
-                                        minWidth: '25px' // Для выравнивания номеров
+                                        minWidth: '25px' 
                                     }}>{poi.visit_order + 1}.</span>
                                     <div>
                                         <span style={{ fontWeight: '500', display: 'block' }}>{poi.location_name}</span>
                                         {poi.activity_name && <span style={{ fontStyle: 'italic', color: '#555', fontSize: '0.9em' }}>{` (Активность: ${poi.activity_name})`}</span>}
                                         <small style={{ color: '#777', display: 'block', marginTop: '3px' }}>
                                             {poi.location_type || 'Место'}
-                                            {/* (map_id: {poi.map_id}) */}
                                         </small>
                                     </div>
                                 </div>
@@ -209,7 +207,7 @@ function VisualRouteEditor({ initialRouteData, onSaveChanges, onCancelEdit }) {
                 </div>
             </div>
 
-            {/* Модальное окно для ЗАМЕНЫ POI */}
+            
             {replacingPOIInfo && (
                  <POISearchModal
                     isOpen={replacingPOIInfo !== null}
@@ -219,13 +217,13 @@ function VisualRouteEditor({ initialRouteData, onSaveChanges, onCancelEdit }) {
                 />
             )}
 
-            {/* Модальное окно для ДОБАВЛЕНИЯ POI */}
+            
             {isAddingPOI && (
                 <POISearchModal
                     isOpen={isAddingPOI}
                     onClose={handleCloseAddPOIModal}
                     onPOISelected={handlePOISelectedForAddition}
-                    currentPOIName={null} // Для добавления не нужно имя текущего POI
+                    currentPOIName={null} 
                 />
             )}
         </div>

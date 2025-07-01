@@ -62,8 +62,8 @@ function QueryInputBar({ currentInputText, onInputChange, onSubmitText, onOpenPa
                  padding: '12px 22px',
                  borderRadius: 'var(--border-radius-md, 10px)',
                  border: 'none', 
-                 backgroundColor: 'var(--pastel-info, #b2dfdb)', // Например, нежно-мятный
-                 color: 'var(--text-on-pastel-info, #004d40)',    // Темный текст на мятном
+                 backgroundColor: 'var(--pastel-info, #b2dfdb)', 
+                 color: 'var(--text-on-pastel-info, #004d40)',    
                  cursor: isLoading ? 'not-allowed' : 'pointer',
                  fontSize: '1em',
                  fontWeight: '500',

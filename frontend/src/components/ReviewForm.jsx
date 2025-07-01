@@ -1,9 +1,8 @@
-// frontend/src/components/ReviewForm.jsx
 import React, { useState } from 'react';
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 
-// Простой компонент для выбора звезд
+
 const StarRatingInput = ({ rating, setRating }) => {
   const totalStars = 5;
   return (
@@ -83,10 +82,10 @@ function ReviewForm({ targetId, targetType, onReviewSubmitted, currentUserId }) 
       }
 
       setSuccessMessage('Отзыв успешно добавлен!');
-      setRating(0); // Сбросить форму
+      setRating(0); 
       setComment('');
       if (onReviewSubmitted) {
-        onReviewSubmitted(responseData); // Передать новый отзыв родительскому компоненту
+        onReviewSubmitted(responseData); 
       }
     } catch (err) {
       setError(err.message || 'Не удалось отправить отзыв.');
@@ -132,8 +131,8 @@ function ReviewForm({ targetId, targetType, onReviewSubmitted, currentUserId }) 
         disabled={isLoading || rating === 0}
         style={{
           padding: '10px 18px',
-          backgroundColor: (isLoading || rating === 0) ? '#ccc' : 'var(--pastel-success, #c1e1c1)', // Цвет успеха
-          color: (isLoading || rating === 0) ? '#666' : 'var(--text-on-pastel-success, #388e3c)',    // Текст для цвета успеха
+          backgroundColor: (isLoading || rating === 0) ? '#ccc' : 'var(--pastel-success, #c1e1c1)', 
+          color: (isLoading || rating === 0) ? '#666' : 'var(--text-on-pastel-success, #388e3c)',    
           border: 'none',
           borderRadius: 'var(--border-radius-sm, 6px)',
           cursor: (isLoading || rating === 0) ? 'not-allowed' : 'pointer',
@@ -144,7 +143,7 @@ function ReviewForm({ targetId, targetType, onReviewSubmitted, currentUserId }) 
         }}
         onMouseEnter={(e) => {
             if (!(isLoading || rating === 0)) {
-                e.currentTarget.style.backgroundColor = 'var(--pastel-success-darker, #a9d1a9)'; // Нужна переменная
+                e.currentTarget.style.backgroundColor = 'var(--pastel-success-darker, #a9d1a9)'; 
                 e.currentTarget.style.boxShadow = 'var(--box-shadow-medium, 0 4px 8px rgba(0,0,0,0.1))';
             }
         }}

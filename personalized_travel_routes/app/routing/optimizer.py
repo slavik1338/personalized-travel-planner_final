@@ -5,7 +5,6 @@ from datetime import date, datetime, timedelta
 import numpy as np 
 
 
-
 MAX_DAILY_TRAVEL_TIME_HOURS = 3.0
 ESTIMATED_DAILY_VISIT_TIME_HOURS = 5.0
 

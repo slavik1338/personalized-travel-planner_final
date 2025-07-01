@@ -12,7 +12,6 @@ try:
     if db.query(Location).count() == 0:
         print("Seeding locations...")
 
-        # --- Москва, Россия ---
         loc_red_square = Location(
             name="Красная Площадь", latitude=55.7541, longitude=37.6202,
             city="москва", country="Россия",
@@ -51,7 +50,6 @@ try:
         )
 
 
-        # --- Санкт-Петербург, Россия ---
         loc_hermitage = Location(
             name="Эрмитаж", latitude=59.9398, longitude=30.3145,
             city="Санкт-Петербург", country="Россия",
@@ -65,7 +63,6 @@ try:
             cost=1000.0, cost_currency="RUB", opening_hours="Ежедневно 9:00-20:00"
         )
 
-        # --- Рим, Италия ---
         loc_colosseum = Location(
             name="Колизей", latitude=41.8902, longitude=12.4924,
             city="Рим", country="Италия",

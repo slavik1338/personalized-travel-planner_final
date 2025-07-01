@@ -1,6 +1,5 @@
-// frontend/src/components/POISearchModal.jsx
 import React, { useState, useEffect, useCallback } from 'react';
-import { debounce } from 'lodash'; // Установи `lodash` если еще нету: npm install lodash
+import { debounce } from 'lodash'; 
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 
@@ -10,7 +9,7 @@ function POISearchModal({ isOpen, onClose, onPOISelected, currentPOIName }) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
     const fetchSearchResults = useCallback(
         debounce(async (query) => {
             if (!query || query.length < 2) {
@@ -42,13 +41,13 @@ function POISearchModal({ isOpen, onClose, onPOISelected, currentPOIName }) {
             } finally {
                 setIsLoading(false);
             }
-        }, 500), // Задержка debounce в 500ms
-        [] // Зависимости useCallback
+        }, 500), 
+        [] 
     );
 
     useEffect(() => {
         if (isOpen) {
-            // Сброс состояния при открытии модального окна
+            
             setSearchQuery('');
             setSearchResults([]);
             setError(null);
@@ -60,10 +59,10 @@ function POISearchModal({ isOpen, onClose, onPOISelected, currentPOIName }) {
         if (searchQuery) {
             fetchSearchResults(searchQuery);
         } else {
-            setSearchResults([]); // Очищаем результаты, если запрос пустой
+            setSearchResults([]); 
             setError(null);
         }
-        // Отменяем предыдущий debounce вызов при размонтировании или изменении fetchSearchResults
+        
         return () => fetchSearchResults.cancel();
     }, [searchQuery, fetchSearchResults]);
 
@@ -71,9 +70,9 @@ function POISearchModal({ isOpen, onClose, onPOISelected, currentPOIName }) {
     const handleSelectPOI = (poi) => {
         onPOISelected({
             new_item_id: poi.id,
-            new_item_type: poi.item_type, // 'location' или 'activity'
+            new_item_type: poi.item_type, 
         });
-        onClose(); // Закрываем модальное окно после выбора
+        onClose(); 
     };
 
     if (!isOpen) {
@@ -81,12 +80,12 @@ function POISearchModal({ isOpen, onClose, onPOISelected, currentPOIName }) {
     }
 
     return (
-        <div style={{ /* Стили для оверлея модального окна (как в VisualRouteEditor) */
+        <div style={{
             position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
             backgroundColor: 'rgba(0,0,0,0.6)', display: 'flex',
-            alignItems: 'center', justifyContent: 'center', zIndex: 1002 // Выше чем VisualRouteEditor
+            alignItems: 'center', justifyContent: 'center', zIndex: 1002 
         }}>
-            <div style={{ /* Стили для контента модального окна */
+            <div style={{
                 backgroundColor: 'white', padding: '25px', borderRadius: '8px',
                 width: '90%', maxWidth: '600px', maxHeight: '85vh',
                 display: 'flex', flexDirection: 'column', boxShadow: '0 5px 15px rgba(0,0,0,0.3)'
@@ -120,7 +119,7 @@ function POISearchModal({ isOpen, onClose, onPOISelected, currentPOIName }) {
                                         padding: '12px 10px',
                                         borderBottom: '1px solid #f0f0f0',
                                         cursor: 'pointer',
-                                        backgroundColor: '#fff', // Для эффекта при наведении
+                                        backgroundColor: '#fff', 
                                     }}
                                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f9f9f9'}
                                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}

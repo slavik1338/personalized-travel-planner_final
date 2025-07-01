@@ -1,19 +1,17 @@
-// frontend/src/pages/RegistrationPage.jsx
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-// TODO: Define API_BASE_URL (or get it from App.jsx)
+
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 
 
-function RegistrationPage({ onRegistrationSuccess }) { // onRegistrationSuccess - функция, которая будет вызвана при успешной регистрации
+function RegistrationPage({ onRegistrationSuccess }) { 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null); // Для сообщения об успешной регистрации
+  const [successMessage, setSuccessMessage] = useState(null); 
 
   const navigate = useNavigate();
 
@@ -29,7 +27,7 @@ function RegistrationPage({ onRegistrationSuccess }) { // onRegistrationSuccess 
       return;
     }
 
-    const registrationData = { email, password }; // Бэкенд ожидает только email и password
+    const registrationData = { email, password }; 
 
     try {
       const response = await fetch(`${API_BASE_URL}/users/register`, {
@@ -41,22 +39,16 @@ function RegistrationPage({ onRegistrationSuccess }) { // onRegistrationSuccess 
       const responseData = await response.json();
 
       if (!response.ok) {
-        // Обработка ошибок регистрации (например, email уже занят)
         setError(responseData.detail || `Ошибка регистрации: ${response.status}`);
         console.error("Registration failed:", responseData);
       } else {
-        // Регистрация успешна
         console.log("Registration successful:", responseData);
         setSuccessMessage("Регистрация прошла успешно! Теперь вы можете войти.");
-        // Optional: Call a function in App.jsx if needed
-        // onRegistrationSuccess();
-        // Optional: Automatically navigate to login page after a delay
-        // setTimeout(() => navigate('/login'), 2000); // Перенаправить на страницу входа через 2 секунды
+        setTimeout(() => navigate('/login')); 
 
       }
 
     } catch (err) {
-      // Обработка сетевых ошибок
       setError(`Network error: ${err.message}`);
       console.error("Fetch error:", err);
     } finally {

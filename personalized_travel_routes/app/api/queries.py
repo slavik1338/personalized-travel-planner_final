@@ -1,5 +1,3 @@
-# app/api/queries.py
-
 from fastapi import APIRouter, Depends, HTTPException, status, Header
 from sqlalchemy.orm import Session, joinedload, aliased
 from sqlalchemy.orm.attributes import flag_modified
@@ -7,10 +5,10 @@ from typing import Optional, List, Union
 from datetime import date
 
 from database.db import get_db
-from database.models import Query as DBQuery # Модель Query из БД
-from database.models import Route as DBRoute, RouteLocationMap, Location, Activity # Модели Route, RouteLocationMap, Location, Activity
+from database.models import Query as DBQuery 
+from database.models import Route as DBRoute, RouteLocationMap, Location, Activity
 
-from app import schemas # Pydantic схемы
+from app import schemas
 from app.nlp.processor import extract_travel_info
 from app.routing.generator import generate_route
 
@@ -23,10 +21,10 @@ router = APIRouter(
 
 print("DEBUG: APIRouter 'queries' defined")
 
-@router.post("/", response_model=Union[schemas.FullRouteDetailsResponse, schemas.ClarificationRequired]) # <--- ИЗМЕНЕНО на FullRouteDetailsResponse
+@router.post("/", response_model=Union[schemas.FullRouteDetailsResponse, schemas.ClarificationRequired]) 
 def process_and_save_query(
-    structured_query: schemas.StructuredQuery, # Данные из тела запроса, валидируются Pydantic
-    db: Session = Depends(get_db), # Зависимость для получения сессии БД
+    structured_query: schemas.StructuredQuery,
+    db: Session = Depends(get_db),
     x_user_id: int = Header(..., alias="X-User-ID", description="ID of the authenticated user") 
 ):
     print(f"DEBUG: POST /queries/ endpoint reached for user_id: {x_user_id}")

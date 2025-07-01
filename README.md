@@ -10,7 +10,7 @@
     -   **База данных:** PostgreSQL
     -   **ORM:** SQLAlchemy
     -   **Миграции:** Alembic
-    -   **NLP:** SpaCy, Scikit-learn (для кастомных моделей классификации)
+    -   **NLP:** SpaCy
 -   **Frontend:**
     -   **Библиотека:** React (с Vite)
     -   **Маршрутизация:** React Router DOM

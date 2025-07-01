@@ -1,32 +1,31 @@
-/* В src/index.css или src/App.css */
 :root {
   /* Основные цвета */
-  --pastel-primary: #a7c7e7;   /* Нежно-голубой (для акцентов, кнопок) */
-  --pastel-secondary: #fdd7aa; /* Нежно-персиковый (для других акцентов) */
-  --pastel-success: #c1e1c1;   /* Нежно-зеленый (для успеха, "Мне всё нравится") */
-  --pastel-warning: #ffe0b2;   /* Нежно-оранжевый/желтый (для "Изменить") */
-  --pastel-danger: #f8caca;    /* Нежно-розовый (для удаления, ошибок) */
+  --pastel-primary: #a7c7e7;   
+  --pastel-secondary: #fdd7aa; 
+  --pastel-success: #c1e1c1;   
+  --pastel-warning: #ffe0b2;   
+  --pastel-danger: #f8caca;    
   --pastel-info: #b2dfdb;
   --pastel-info-darker: #80cbc4;
-  --text-on-pastel-info: #004d40;      /* Нежно-мятный (для информационных сообщений) */
+  --text-on-pastel-info: #004d40;
   --pastel-secondary-lighter: #fff5eb;
   --pastel-secondary-darker: #fca760; 
 
 
 
 
-  --background-body: #c6d3df; /* Очень светлый, почти белый с оттенком */
-  --background-main-content: #ffffff; /* Белый для основных блоков контента */
-  --background-conversation: #ffffff; /* Очень светло-серый/голубой для чата */
+  --background-body: #c6d3df; 
+  --background-main-content: #ffffff;
+  --background-conversation: #ffffff;
   --background-input-area: #ffffff;
   --background-modal: #ffffff;
   
   /* Текст */
-  --text-dark: #4a5568;  /* Темно-серый, но не черный */
-  --text-medium: #718096; /* Средне-серый */
-  --text-light: #ffffff;  /* Белый (для темных кнопок, если будут) */
-  --text-on-pastel-primary: #2c3e50; /* Текст на основной пастельной кнопке (темный для читаемости) */
-  --text-on-pastel-success: #388e3c; /* Текст на зеленой кнопке */
+  --text-dark: #4a5568;  
+  --text-medium: #718096;
+  --text-light: #ffffff; 
+  --text-on-pastel-primary: #2c3e50; 
+  --text-on-pastel-success: #388e3c; 
 
 
   /* Границы и тени */
@@ -51,11 +50,11 @@
 }
 
 .main-content-wrapper {
-  max-width: 1280px; /* Ваша контентная ширина */
-  width: 100%; /* Чтобы занимал доступную ширину до max-width */
-  margin: 0 auto;  /* Центрирование */
-  padding: 1.5rem 2rem; /* Внутренние отступы для контента (бывшие 2rem с #root) */
-  flex-grow: 1; /* Чтобы занимал оставшееся место по высоте */
+  max-width: 1280px; 
+  width: 100%; 
+  margin: 0 auto;  
+  padding: 1.5rem 2rem; 
+  flex-grow: 1; 
 }
 
 body {

@@ -1,7 +1,6 @@
-// frontend/src/pages/Reviews.jsx
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom'; // Если будем ссылаться на детали маршрута
-import ReviewList from '../components/ReviewList'; // Наш компонент для отзывов
+import { Link } from 'react-router-dom';
+import ReviewList from '../components/ReviewList';
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 
@@ -11,19 +10,17 @@ const getCurrentUserId = () => {
 };
 
 function ReviewsPage() {
-    const [userQueries, setUserQueries] = useState([]); // Список запросов пользователя (из истории)
-    const [selectedQuery, setSelectedQuery] = useState(null); // Выбранный запрос (и связанный с ним маршрут)
+    const [userQueries, setUserQueries] = useState([]);
+    const [selectedQuery, setSelectedQuery] = useState(null);
     
-    const [routeDetails, setRouteDetails] = useState(null); // Детали маршрута для выбранного запроса
-    const [selectedPoi, setSelectedPoi] = useState(null); // Выбранный POI (место/активность) из маршрута для отображения/добавления отзывов
-
+    const [routeDetails, setRouteDetails] = useState(null);
+    const [selectedPoi, setSelectedPoi] = useState(null); 
     const [isLoadingQueries, setIsLoadingQueries] = useState(false);
     const [isLoadingRouteDetails, setIsLoadingRouteDetails] = useState(false);
     const [error, setError] = useState(null);
 
     const userId = getCurrentUserId();
 
-    // 1. Загрузка истории запросов пользователя (чтобы получить route_id)
     useEffect(() => {
         if (!userId) {
             setError("Пожалуйста, войдите в систему для просмотра отзывов.");
@@ -39,7 +36,6 @@ function ReviewsPage() {
                 return res.json();
             })
             .then(data => {
-                // Фильтруем только те запросы, у которых есть валидный route_id
                 const queriesWithRoutes = data.filter(
                     q => q.parameters && q.parameters.route_id && parseInt(q.parameters.route_id, 10) > 0
                 );
@@ -52,13 +48,12 @@ function ReviewsPage() {
             .finally(() => setIsLoadingQueries(false));
     }, [userId]);
 
-    // 2. Загрузка деталей маршрута при выборе запроса
     const handleQuerySelect = useCallback(async (query) => {
         if (!query || !query.parameters || !query.parameters.route_id) return;
 
         setSelectedQuery(query);
-        setSelectedPoi(null); // Сбросить выбранный POI
-        setRouteDetails(null); // Сбросить предыдущие детали маршрута
+        setSelectedPoi(null);
+        setRouteDetails(null);
         setIsLoadingRouteDetails(true);
         setError(null);
         
@@ -79,7 +74,6 @@ function ReviewsPage() {
         }
     }, [userId]);
     
-    // Стиль для выбранного элемента
     const selectedStyle = { backgroundColor: '#e7f3ff', fontWeight: 'bold' };
 
     if (!userId) {
@@ -88,7 +82,6 @@ function ReviewsPage() {
 
     return (
         <div style={{ padding: '20px', display: 'flex', gap: '20px' }}>
-            {/* Левая колонка: Список маршрутов пользователя */}
             <div style={{ width: '300px', borderRight: '1px solid #eee', paddingRight: '20px' }}>
                 <h3 style={{ marginTop: 0 }}>Ваши маршруты</h3>
                 {isLoadingQueries && <p>Загрузка маршрутов...</p>}
@@ -112,13 +105,11 @@ function ReviewsPage() {
                             Запрос: "{query.query_text.substring(0, 30)}{query.query_text.length > 30 ? '...' : ''}"
                             <br/>
                             <small>Маршрут ID: {query.parameters.route_id}</small>
-                            {/* Можно добавить даты маршрута, если они есть в query.parameters */}
                         </li>
                     ))}
                 </ul>
             </div>
 
-            {/* Правая колонка: Детали маршрута и отзывы */}
             <div style={{ flex: 1 }}>
                 {!selectedQuery && <p>Выберите маршрут из списка слева, чтобы посмотреть места и оставить отзывы.</p>}
                 
@@ -127,8 +118,7 @@ function ReviewsPage() {
                 {routeDetails && (
                     <div>
                         <h3 style={{ marginTop: 0 }}>Места в маршруте "{routeDetails.query_id ? `(Запрос ID: ${routeDetails.query_id})` : `ID: ${routeDetails.route_id}`}"</h3>
-                        {/* Можно отобразить общую информацию о маршруте, если нужно */}
-                        {/* <p>Стоимость: {routeDetails.total_cost} {routeDetails.total_cost_currency}, Длительность: {routeDetails.duration_days} дней</p> */}
+                        
 
                         {routeDetails.locations_on_route && routeDetails.locations_on_route.length > 0 ? (
                             routeDetails.locations_on_route.map(poi => (
@@ -139,11 +129,11 @@ function ReviewsPage() {
                                         borderRadius: '8px', 
                                         padding: '15px', 
                                         marginBottom: '15px',
-                                        cursor: 'pointer', // Сделать POI кликабельным для выбора
+                                        cursor: 'pointer', 
                                         backgroundColor: selectedPoi && 
                                                          ((selectedPoi.type === 'location' && selectedPoi.id === poi.location_id) || 
                                                           (selectedPoi.type === 'activity' && selectedPoi.id === poi.activity_id)) 
-                                                          ? '#f0f8ff' : '#fff' // Подсветка выбранного POI
+                                                          ? '#f0f8ff' : '#fff' 
                                     }}
                                     onClick={() => setSelectedPoi({ 
                                         id: poi.activity_id || poi.location_id, 
@@ -160,10 +150,9 @@ function ReviewsPage() {
                                            Активность: {poi.activity_name}
                                        </p>
                                     )}
-                                    {/* Здесь будут отображаться отзывы, если этот POI выбран */}
                                     {selectedPoi && 
-                                     ((selectedPoi.type === 'location' && selectedPoi.id === poi.location_id && !poi.activity_id) || // Отзывы локации, если нет активности
-                                      (selectedPoi.type === 'activity' && selectedPoi.id === poi.activity_id)) && ( // Отзывы активности
+                                     ((selectedPoi.type === 'location' && selectedPoi.id === poi.location_id && !poi.activity_id) || 
+                                      (selectedPoi.type === 'activity' && selectedPoi.id === poi.activity_id)) && ( 
                                         <ReviewList 
                                             targetId={selectedPoi.id}
                                             targetType={selectedPoi.type}

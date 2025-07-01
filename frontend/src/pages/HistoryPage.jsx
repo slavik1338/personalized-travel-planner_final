@@ -1,10 +1,9 @@
-// frontend/src/pages/HistoryPage.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 
-// Helper function to get current user ID from localStorage
+
 const getCurrentUserId = () => {
     const userId = localStorage.getItem('currentUserId');
     return userId ? parseInt(userId, 10) : null;
@@ -60,14 +59,14 @@ function HistoryPage() {
 
   return (
     <div style={{ 
-        padding: '30px 20px' // Общий вертикальный отступ для страницы
+        padding: '30px 20px' 
     }}>
         <div style={{
             backgroundColor: 'var(--background-main-content, #ffffff)',
-            maxWidth: '900px', // Немного шире для истории
+            maxWidth: '900px', 
             margin: '0 auto',
-            padding: '30px', // Внутренние отступы для "карточки"
-            borderRadius: 'var(--border-radius-lg, 16px)', // Более заметное скругление
+            padding: '30px', 
+            borderRadius: 'var(--border-radius-lg, 16px)', 
             boxShadow: 'var(--box-shadow-medium, 0 6px 12px rgba(0, 0, 0, 0.08))',
             border: '1px solid var(--border-color, #e2e8f0)'
         }}>
@@ -93,17 +92,17 @@ function HistoryPage() {
                     {historyData.map((queryItem, index) => (
                         <React.Fragment key={queryItem.id}>
                             <li style={{ 
-                                padding: '25px 0', // Вертикальные отступы для каждого элемента списка
+                                padding: '25px 0', 
                                 display: 'flex', 
                                 justifyContent: 'space-between', 
-                                alignItems: 'center', // Выравниваем по центру вертикально
-                                flexWrap: 'wrap', // Для адаптивности кнопки
-                                gap: '15px' // Отступ между текстовым блоком и кнопкой
+                                alignItems: 'center', 
+                                flexWrap: 'wrap', 
+                                gap: '15px' 
                             }}>
-                                <div style={{ flexGrow: 1, marginRight: '20px', minWidth: '300px' /* чтобы текст не сжимался слишком сильно */ }}>
+                                <div style={{ flexGrow: 1, marginRight: '20px', minWidth: '300px' }}>
                                     <p style={{ 
                                         margin: '0 0 10px 0', 
-                                        fontWeight: '500', // Medium weight
+                                        fontWeight: '500', 
                                         fontSize: '1.15em', 
                                         color: 'var(--text-dark)' 
                                     }}>
@@ -115,7 +114,7 @@ function HistoryPage() {
                                            {queryItem.parameters.start_date && queryItem.parameters.end_date && (
                                                <p style={{ margin: '0 0 4px 0' }}><strong>Даты:</strong> {queryItem.parameters.start_date} - {queryItem.parameters.end_date}</p>
                                            )}
-                                           {queryItem.parameters.budget !== null && queryItem.parameters.budget !== undefined && ( // Добавил проверку на undefined
+                                           {queryItem.parameters.budget !== null && queryItem.parameters.budget !== undefined && ( 
                                                <p style={{ margin: '0 0 4px 0' }}><strong>Бюджет:</strong> {queryItem.parameters.budget} {queryItem.parameters.budget_currency || ''}</p>
                                            )}
                                            {queryItem.parameters.destination && queryItem.parameters.destination.length > 0 && (
@@ -140,7 +139,7 @@ function HistoryPage() {
                                 </div>
                                 
                                 {queryItem.parameters && typeof queryItem.parameters === 'object' && queryItem.parameters.hasOwnProperty('route_id') && parseInt(queryItem.parameters.route_id, 10) > 0 && (
-                                     <div style={{ flexShrink: 0 }}> {/* Кнопка не будет сжиматься */}
+                                     <div style={{ flexShrink: 0 }}> 
                                          <Link to={`/routes/${queryItem.parameters.route_id}`} style={{ textDecoration: 'none' }}>
                                              <button style={{ 
                                                  padding: '10px 18px', 
@@ -154,7 +153,7 @@ function HistoryPage() {
                                                  boxShadow: 'var(--box-shadow-soft, 0 2px 4px rgba(0,0,0,0.05))',
                                                  transition: 'background-color 0.2s ease',
                                              }}
-                                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--pastel-primary-darker, #8aabbf)'} // Нужна CSS переменная для hover
+                                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--pastel-primary-darker, #8aabbf)'} 
                                              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--pastel-primary, #a7c7e7)'}
                                              >
                                                  Посмотреть маршрут
@@ -163,12 +162,12 @@ function HistoryPage() {
                                      </div>
                                 )}
                             </li>
-                            {/* Разделительная линия */}
+                            
                             {index < historyData.length - 1 && (
                                 <div style={{
                                     height: '1px',
                                     backgroundColor: 'var(--border-color, #e2e8f0)',
-                                    // margin: '0 15px', // Если хотите отступы у линии по бокам
+                                    
                                 }}></div>
                             )}
                         </React.Fragment>

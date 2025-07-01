@@ -1,24 +1,23 @@
-// frontend/src/components/Header.jsx
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 function Header() {
   const headerStyle = {
-    backgroundColor: 'var(--pastel-primary, #a7c7e7)', // Используем CSS переменную или дефолт
-    padding: '15px 0', // Вертикальный паддинг. Горизонтальный будет у внутреннего контейнера.
+    backgroundColor: 'var(--pastel-primary, #a7c7e7)', 
+    padding: '15px 0', 
     color: 'var(--text-on-pastel-primary, #2c3e50)',
     boxShadow: 'var(--box-shadow-soft, 0 2px 5px rgba(0, 0, 0, 0.06))',
-    width: '100%', // Убедимся, что он пытается занять всю ширину
+    width: '100%', 
     boxSizing: 'border-box',
-    // Убрали position: fixed и связанные с ним top, left, zIndex
+    
   };
 
-  // Внутренний контейнер для центрирования контента хедера
-  // Его max-width и padding должны совпадать с .main-content-wrapper
+  
+  
   const headerContentStyle = {
-    maxWidth: '1280px', // Такая же ширина, как у основного контента
-    margin: '0 auto',   // Центрирование
-    padding: '0 2rem',  // Такие же горизонтальные отступы, как у основного контента
+    maxWidth: '1280px', 
+    margin: '0 auto',   
+    padding: '0 2rem',  
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -56,7 +55,7 @@ function Header() {
 
   return (
     <header style={headerStyle}>
-      <div style={headerContentStyle}> {/* Внутренний контейнер для выравнивания */}
+      <div style={headerContentStyle}> 
         <Link to="/" style={{ textDecoration: 'none' }}>
           <h1 style={titleStyle}>TravelPlanner</h1>
         </Link>

@@ -1,4 +1,3 @@
-# app/api/recommendations.py
 from fastapi import APIRouter, Depends, HTTPException, status, Header
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import or_
@@ -31,9 +30,8 @@ def get_personalized_recommendations(
     if not user_interest_list:
         return []
 
-    recommended_items_dict = {} # Используем словарь для уникальности { ('type', id): item }
+    recommended_items_dict = {} 
 
-    # 1. Рекомендации по Локациям на основе интересов
     location_conditions = [DBLocation.type.ilike(f"%{interest}%") for interest in user_interest_list]
     
     db_locations = db.query(DBLocation).filter(
@@ -53,21 +51,20 @@ def get_personalized_recommendations(
                 country=loc.country
             )
 
-    # 2. Рекомендации по Активностям на основе интересов
     if len(recommended_items_dict) < MAX_RECOMMENDATIONS:
         activity_conditions = [DBActivity.activity_type.ilike(f"%{interest}%") for interest in user_interest_list]
         
         db_activities_query = db.query(DBActivity).join(
             DBLocation, DBActivity.location_id == DBLocation.id
         ).options(
-            joinedload(DBActivity.location) # Для эффективной загрузки данных объекта location
+            joinedload(DBActivity.location) 
         ).filter(
             or_(*activity_conditions)
         )
         
         db_activities_query = db_activities_query.order_by(
-            DBLocation.rating.isnot(None).desc(), # Сначала те локации активностей, у которых есть рейтинг
-            DBLocation.rating.desc().nulls_last()  # Затем по убыванию рейтинга локации
+            DBLocation.rating.isnot(None).desc(),
+            DBLocation.rating.desc().nulls_last()  
         )
         
         activities_to_fetch_limit = (MAX_RECOMMENDATIONS - len(recommended_items_dict)) * 2 + 5 

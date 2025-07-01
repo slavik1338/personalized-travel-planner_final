@@ -1,11 +1,10 @@
-// frontend/src/components/ReviewList.jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import ReviewItem from './ReviewItem';
 import ReviewForm from './ReviewForm';
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 
-// Helper function to get current user ID from localStorage
+
 const getCurrentUserId = () => {
     const userId = localStorage.getItem('currentUserId');
     return userId ? parseInt(userId, 10) : null;
@@ -15,7 +14,7 @@ function ReviewList({ targetId, targetType }) {
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showForm, setShowForm] = useState(false); // Состояние для показа/скрытия формы
+  const [showForm, setShowForm] = useState(false); 
 
   const currentUserId = getCurrentUserId();
 
@@ -36,7 +35,7 @@ function ReviewList({ targetId, targetType }) {
     } catch (err) {
       setError(err.message);
       console.error("Failed to fetch reviews:", err);
-      setReviews([]); // Очистить отзывы в случае ошибки
+      setReviews([]); 
     } finally {
       setIsLoading(false);
     }
@@ -47,8 +46,8 @@ function ReviewList({ targetId, targetType }) {
   }, [fetchReviews]);
 
   const handleReviewSubmitted = (newReview) => {
-    setReviews(prevReviews => [newReview, ...prevReviews]); // Добавить новый отзыв в начало списка
-    setShowForm(false); // Скрыть форму после успешной отправки
+    setReviews(prevReviews => [newReview, ...prevReviews]); 
+    setShowForm(false); 
   };
 
   if (isLoading) {
@@ -69,13 +68,13 @@ function ReviewList({ targetId, targetType }) {
         <ReviewItem key={review.id} review={review} />
       ))}
 
-      {currentUserId && ( // Показать кнопку и форму, только если пользователь авторизован
+      {currentUserId && ( 
         <>
           {!showForm && (
             <button
               onClick={() => setShowForm(true)}
               style={{
-                marginTop: '20px', // Увеличил отступ
+                marginTop: '20px', 
                 padding: '10px 18px',
                 backgroundColor: 'var(--pastel-primary, #a7c7e7)',
                 color: 'var(--text-on-pastel-primary, #2c3e50)',

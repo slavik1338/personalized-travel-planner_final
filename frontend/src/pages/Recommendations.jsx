@@ -1,7 +1,6 @@
-// frontend/src/pages/Recommendations.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import ReviewList from '../components/ReviewList'; // Для отображения отзывов по клику
+import ReviewList from '../components/ReviewList';
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 
@@ -10,7 +9,6 @@ const getCurrentUserId = () => {
     return userId ? parseInt(userId, 10) : null;
 };
 
-// Компонент для отображения одной рекомендации
 const RecommendationCard = ({ item, onShowReviews }) => {
     return (
         <div style={{
@@ -40,7 +38,7 @@ const RecommendationCard = ({ item, onShowReviews }) => {
             <button
                 onClick={() => onShowReviews(item)}
                 style={{
-                    padding: '8px 15px', // Можно сделать чуть меньше, если кнопка внутри карточки
+                    padding: '8px 15px',
                     backgroundColor: 'var(--pastel-primary, #a7c7e7)',
                     color: 'var(--text-on-pastel-primary, #2c3e50)',
                     border: 'none',
@@ -48,9 +46,9 @@ const RecommendationCard = ({ item, onShowReviews }) => {
                     cursor: 'pointer',
                     fontSize: '0.9em',
                     fontWeight: '500',
-                    boxShadow: 'var(--box-shadow-soft, 0 1px 3px rgba(0,0,0,0.04))', // Меньше тень
+                    boxShadow: 'var(--box-shadow-soft, 0 1px 3px rgba(0,0,0,0.04))', 
                     transition: 'background-color 0.2s, box-shadow 0.2s',
-                    marginTop: '10px' // Отступ сверху
+                    marginTop: '10px' 
                 }}
                 onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = 'var(--pastel-primary-darker, #8aabbf)';
@@ -93,11 +91,9 @@ function RecommendationsPage() {
         })
             .then(res => {
                 if (!res.ok) {
-                    // Пытаемся прочитать тело ошибки, если есть
                     return res.json().then(errData => {
                         throw new Error(errData.detail || `Ошибка загрузки рекомендаций: ${res.status}`);
                     }).catch(() => {
-                        // Если тело ошибки не JSON или пустое
                         throw new Error(`Ошибка загрузки рекомендаций: ${res.status}`);
                     });
                 }
@@ -133,7 +129,7 @@ function RecommendationsPage() {
         return <div style={{ padding: '20px', textAlign: 'center' }}>Загрузка рекомендаций...</div>;
     }
 
-    if (error && !profileMessage) { // Показываем ошибку, только если нет специального сообщения о профиле
+    if (error && !profileMessage) {
         return <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>{error}</div>;
     }
 
@@ -168,8 +164,7 @@ function RecommendationsPage() {
             ) : (
                 !profileMessage && !isLoading && <p style={{ textAlign: 'center' }}>Нет доступных рекомендаций.</p>
             )}
-
-            {/* Модальное окно или секция для отображения отзывов */}
+            
             {selectedItemForReviews && (
                 <div style={{
                     position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,

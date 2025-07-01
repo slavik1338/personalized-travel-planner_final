@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; // Добавляем Navigate для перенаправления
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; 
 
-// Импорты компонентов Header и страниц
-import Header from './components/Header'; // TODO: Скрыть Header на страницах Login/Register
-import HomePage from './pages/HomePage'; // Компонент с диалогом
+
+import Header from './components/Header';
+import HomePage from './pages/HomePage'; 
 import ProfilePage from './pages/ProfilePage';
 import Recommendations from './pages/Recommendations';
 import HistoryPage from './pages/HistoryPage'; 
@@ -25,14 +25,12 @@ const isAuthenticated = () => {
 
 
 function App() {
-  // Состояние авторизации
-  const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated()); // Инициализация из Local Storage
+  const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated());
 
-  // Функции для обновления состояния авторизации
   const handleLoginSuccess = (userId) => {
       localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('currentUserId', userId); // Установить флаг в Local Storage
-      setIsLoggedIn(true); // Обновить состояние
+      localStorage.setItem('currentUserId', userId); 
+      setIsLoggedIn(true); 
   };
 
   const handleRegistrationSuccess = () => {
@@ -50,23 +48,15 @@ function App() {
     <BrowserRouter>
       <div className="app-layout" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
 
-        {/* Условно отображаем Header только если пользователь авторизован */}
         {isLoggedIn ? <Header /> : null}
 
-        {/* Область для отображения текущей страницы */}
-        <main style={{ flexGrow: 1, padding: isLoggedIn ? '0 20px' : '0', boxSizing: 'border-box' }}> {/* Добавляем падинги только если Header виден */}
-          <Routes>
-            {/* Маршрут для страницы авторизации */}
-            {/* Если пользователь авторизован и пытается зайти на /login, перенаправляем его на главную */}
-            <Route path="/login" element={isLoggedIn ? <Navigate to="/" /> : <LoginPage onLoginSuccess={handleLoginSuccess} />} />
 
-            {/* Маршрут для страницы регистрации */}
-            {/* Если пользователь авторизован и пытается зайти на /register, перенаправляем его на главную */}
+        <main style={{ flexGrow: 1, padding: isLoggedIn ? '0 20px' : '0', boxSizing: 'border-box' }}> 
+          <Routes>
+            
+            <Route path="/login" element={isLoggedIn ? <Navigate to="/" /> : <LoginPage onLoginSuccess={handleLoginSuccess} />} />
             <Route path="/register" element={isLoggedIn ? <Navigate to="/" /> : <RegistrationPage onRegistrationSuccess={handleRegistrationSuccess} />} />
 
-
-            {/* Защищенные маршруты (доступны только авторизованным пользователям) */}
-            {/* Если пользователь не авторизован, перенаправляем на страницу авторизации */}
             <Route path="/" element={isLoggedIn ? <HomePage /> : <Navigate to="/login" />} />
             <Route path="/profile" element={isLoggedIn ? <ProfilePage onLogout={handleLogout} /> : <Navigate to="/login" />} />
             <Route path="/recommendations" element={isLoggedIn ? <Recommendations /> : <Navigate to="/login" />} />
@@ -74,7 +64,6 @@ function App() {
             <Route path="/reviews" element={isLoggedIn ? <Reviews /> : <Navigate to="/login" />} />
             <Route path="/routes/:route_id" element={isLoggedIn ? <RouteDetailsPage /> : <Navigate to="/login" />} />
 
-            {/* TODO: Add a Catch-all route for 404 */}
           </Routes>
         </main>
 

@@ -1,14 +1,13 @@
-// frontend/src/pages/HomePage.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import ConversationHistory from '../components/ConversationHistory';
 import QueryInputBar from '../components/QueryInputBar';
 import AdditionalParametersModal from '../components/AdditionalParametersModal';
-import VisualRouteEditor from '../components/VisualRouteEditor'; // Импортируем редактор
+import VisualRouteEditor from '../components/VisualRouteEditor'; 
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 console.log("API Base URL (HomePage):", API_BASE_URL);
 
-// Helper function to get current user ID from localStorage
+
 const getCurrentUserId = () => {
     const userId = localStorage.getItem('currentUserId');
     return userId ? parseInt(userId, 10) : null;
@@ -33,17 +32,17 @@ function HomePage() {
   });
 
   const [isParamsModalOpen, setIsParamsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Общий isLoading для запросов к /queries/
+  const [isLoading, setIsLoading] = useState(false); 
   const [awaitingClarificationField, setAwaitingClarificationField] = useState(null);
   const [originalQueryText, setOriginalQueryText] = useState('');
 
-  // Состояние для данных маршрута, который редактируется
-  const [routeBeingEdited, setRouteBeingEdited] = useState(null); // Хранит объект FullRouteDetailsResponse
+  
+  const [routeBeingEdited, setRouteBeingEdited] = useState(null); 
 
   const sendQuery = async (queryData) => {
       setIsLoading(true);
-      // Очищаем предыдущие сообщения о маршрутах из диалога, чтобы не было путаницы со старыми кнопками
-      // и чтобы новый маршрут был единственным активным для редактирования/финализации.
+      
+      
       setConversation(prev => prev.filter(msg => msg.type !== 'system_route'));
 
       console.log("HomePage.jsx - sendQuery - queryData to be sent:", JSON.stringify(queryData, null, 2));
@@ -78,12 +77,12 @@ function HomePage() {
                   }
                   setAwaitingClarificationField(missingField);
                   setConversation(prev => [...prev, { type: 'system', text: clarificationMsg }]);
-                  // Сохраняем оригинальный текст запроса для последующего использования при уточнении
-                  // originalQueryText уже должен быть установлен в handleTextInputSubmit
+                  
+                  
               } else {
                   console.log("Route generated successfully:", responseData);
-                  // Убедимся, что is_finalized приходит (по умолчанию false от бэкенда)
-                  // и что map_id есть в locations_on_route
+                  
+                  
                   const routeWithFinalizedFlag = { 
                     ...responseData, 
                     is_finalized: responseData.is_finalized || false 
@@ -116,53 +115,53 @@ function HomePage() {
 
   const handleTextInputSubmit = (text) => {
       const inputText = text.trim();
-      if (!inputText && !awaitingClarificationField) { // Если поле пустое и не ожидается уточнение
+      if (!inputText && !awaitingClarificationField) { 
           return;
       }
 
-      // Добавляем сообщение пользователя в чат, только если оно не пустое
+      
       if (inputText) {
          setConversation(prev => [...prev, { type: 'user', text: inputText }]);
       }
-      setCurrentInputText(''); // Очищаем поле ввода
+      setCurrentInputText(''); 
 
       let dataToSend;
 
       if (awaitingClarificationField === 'destination') {
-          if (!inputText) { // Если ожидается уточнение места, а пользователь ничего не ввел
+          if (!inputText) { 
                setConversation(prev => [...prev, { type: 'system', text: 'Пожалуйста, введите место назначения.', isError: true }]);
-               return; // Не отправляем запрос
+               return; 
           }
           dataToSend = {
-              query_text: originalQueryText, // Используем сохраненный текст основного запроса
+              query_text: originalQueryText, 
               start_date: structuredParams.start_date,
               end_date: structuredParams.end_date,
               budget: structuredParams.budget,
               budget_currency: structuredParams.budget_currency,
-              destination: [inputText], // Добавляем уточненное место назначения
+              destination: [inputText], 
           };
-          setAwaitingClarificationField(null); // Сбрасываем флаг ожидания
-          // originalQueryText не сбрасываем, если хотим позволить несколько уточнений к одному запросу,
-          // но для текущей логики лучше сбросить, т.к. запрос отправлен.
-          // setOriginalQueryText('');
+          setAwaitingClarificationField(null); 
+          
+          
+          
       } else {
-          // Это новый запрос, не уточнение
-          if (!inputText) return; // Если это новый запрос и он пустой, ничего не делаем
-          setOriginalQueryText(inputText); // Сохраняем текст текущего запроса как оригинальный
+          
+          if (!inputText) return; 
+          setOriginalQueryText(inputText); 
           dataToSend = {
               query_text: inputText,
               start_date: structuredParams.start_date,
               end_date: structuredParams.end_date,
               budget: structuredParams.budget,
               budget_currency: structuredParams.budget_currency,
-              destination: [], // Назначение будет извлечено NLP из query_text
+              destination: [], 
           };
           setAwaitingClarificationField(null);
       }
       sendQuery(dataToSend);
   };
 
-  const handleParamsSaved = (paramsFromModal) => { // paramsFromModal уже в snake_case
+  const handleParamsSaved = (paramsFromModal) => { 
       setStructuredParams(paramsFromModal);
       setIsParamsModalOpen(false);
        setConversation(prev => [...prev, { type: 'system', text: `Параметры обновлены: Даты (${paramsFromModal.start_date} - ${paramsFromModal.end_date}), Бюджет (${paramsFromModal.budget === null ? 'Неограничен' : `${paramsFromModal.budget} ${paramsFromModal.budget_currency}`}).` }]);
@@ -187,7 +186,7 @@ function HomePage() {
         return;
     }
     console.log(`Finalizing route ID: ${routeId} for user ID: ${userId}`);
-    // setIsLoading(true); // Можно добавить isLoading для этой операции
+    
     try {
         const response = await fetch(`${API_BASE_URL}/routes/${routeId}/finalize`, {
             method: 'POST',
@@ -195,43 +194,43 @@ function HomePage() {
                 'X-User-ID': userId.toString(),
             }
         });
-        // updatedRouteData - это данные, которые вернул бэкенд после финализации
+        
         const updatedRouteData = await response.json(); 
 
         if (!response.ok) {
-            // Если detail есть в JSON ответе, используем его, иначе стандартное сообщение
+            
             const errorDetail = updatedRouteData?.detail || `Failed to finalize route. Status: ${response.status}`;
             throw new Error(errorDetail);
         }
 
-        // Обновить маршрут в состоянии conversation
+        
         setConversation(prevConversation =>
             prevConversation.map(msg => {
                 if (msg.type === 'system_route' && msg.data.route_id === routeId) {
-                    // Используем updatedRouteData, полученный от /finalize эндпоинта
+                    
                     return { ...msg, data: { ...updatedRouteData } }; 
                 }
                 return msg;
             })
         );
-        // Добавить сообщение пользователю
+        
         setConversation(prev => [...prev, { type: 'system', text: `Маршрут (ID: ${routeId}) утвержден!` }]);
 
     } catch (error) {
         console.error("Error finalizing route:", error);
         setConversation(prev => [...prev, { type: 'system', text: `Ошибка утверждения маршрута: ${error.message}`, isError: true }]);
     } finally {
-        // setIsLoading(false);
+        
     }
   };
 
-  // Обработчик для "Изменить маршрут"
+  
   const handleEditRouteRequest = (routeDataToEdit) => {
     console.log("User wants to edit route (HomePage):", routeDataToEdit);
-    setRouteBeingEdited(routeDataToEdit); // Открываем редактор с данными этого маршрута
+    setRouteBeingEdited(routeDataToEdit); 
   };
 
-  // Обработчик сохранения изменений из VisualRouteEditor
+  
   const handleEditorSaveChanges = (updatedRouteDataFromEditor) => {
     setConversation(prevConversation =>
         prevConversation.map(msg => {
@@ -245,7 +244,7 @@ function HomePage() {
     setConversation(prev => [...prev, { type: 'system', text: `Маршрут (ID: ${updatedRouteDataFromEditor.route_id}) обновлен. Нажмите "Мне всё нравится", чтобы утвердить.` }]);
   };
 
-  // Обработчик отмены редактирования
+  
   const handleEditorCancel = () => {
     setRouteBeingEdited(null); 
   };
@@ -254,8 +253,8 @@ function HomePage() {
     <div className="home-page-container" style={{
         display: 'flex',
         flexDirection: 'column',
-        height: 'calc(100vh - 71px - 40px)', // Пример: 100vh - header_height - app_padding_top_bottom
-                                            // Точное значение зависит от высоты Header и отступов в App.jsx
+        height: 'calc(100vh - 71px - 40px)', 
+                                            
         fontFamily: 'sans-serif',
         boxSizing: 'border-box',
     }}>
@@ -309,7 +308,7 @@ function HomePage() {
                     <AdditionalParametersModal
                         onSave={handleParamsSaved}
                         onCancel={() => setIsParamsModalOpen(false)}
-                        initialParams={structuredParams} // structuredParams уже в snake_case
+                        initialParams={structuredParams} 
                     />
                 )}
             </>

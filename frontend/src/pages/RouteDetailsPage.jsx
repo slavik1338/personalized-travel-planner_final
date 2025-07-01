@@ -1,7 +1,6 @@
-// frontend/src/pages/RouteDetailsPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import ReviewList from '../components/ReviewList'; // <--- Импортируем ReviewList
+import ReviewList from '../components/ReviewList'; 
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 
@@ -10,7 +9,6 @@ const getCurrentUserId = () => {
     return userId ? parseInt(userId, 10) : null;
 };
 
-// getAuthToken можно удалить, если не используется
 
 function RouteDetailsPage() {
   const { route_id } = useParams();
@@ -37,7 +35,7 @@ function RouteDetailsPage() {
 
       try {
         const headers = {
-            'X-User-ID': userId.toString(), // Добавляем X-User-ID
+            'X-User-ID': userId.toString(), 
         };
 
         const routeIdNumber = parseInt(route_id, 10);
@@ -69,10 +67,10 @@ function RouteDetailsPage() {
       }
     };
 
-    if (route_id) { // Добавим проверку, чтобы useEffect не срабатывал без route_id
+    if (route_id) {
         fetchRouteDetails();
     }
-  }, [route_id]); // Зависимость от route_id
+  }, [route_id]); 
 
 
   if (isLoading) {
@@ -88,13 +86,12 @@ function RouteDetailsPage() {
   }
 
   return (
-    <div style={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}> {/* Убрал рамку, чтобы контент мог расширяться */}
+    <div style={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}> 
       <h2 style={{ textAlign: 'center', marginTop: 0, marginBottom: '20px' }}>Детали Маршрута </h2>
 
        <div style={{ border: '1px solid #eee', borderRadius: '8px', padding: '20px', marginBottom: '20px' }}>
             <p><strong>Примерная общая стоимость:</strong> {routeData.total_cost?.toFixed(2)} {routeData.total_cost_currency}</p>
             <p><strong>Длительность:</strong> {routeData.duration_days} дней</p>
-            {/* TODO: Add start/end dates if available from routeData */}
        </div>
 
 
@@ -108,7 +105,7 @@ function RouteDetailsPage() {
                           {locationDetail.visit_order + 1}. {locationDetail.location_name}
                           {locationDetail.location_type && ` (${locationDetail.location_type})`}
                       </p>
-                       {locationDetail.activity_name && ( // Если есть связанная активность
+                       {locationDetail.activity_name && ( 
                            <div style={{ marginLeft: '15px', paddingLeft: '15px', borderLeft: '2px solid #007bff', marginBottom: '10px' }}>
                                <p style={{ margin: '0 0 5px 0', fontStyle: 'italic', fontWeight: 'bold' }}>
                                    Активность: {locationDetail.activity_name}
@@ -118,19 +115,17 @@ function RouteDetailsPage() {
                                        {locationDetail.activity_description}
                                    </p>
                                )}
-                               {/* Отзывы для активности */}
                                <ReviewList
                                   targetId={locationDetail.activity_id}
                                   targetType="activity"
                                />
                            </div>
                        )}
-                      {locationDetail.location_description && !locationDetail.activity_name && ( // Показываем описание локации, если нет связанной активности на этом шаге
+                      {locationDetail.location_description && !locationDetail.activity_name && (
                           <p style={{ margin: '0 0 10px 0', color: '#555' }}>
                               {locationDetail.location_description}
                           </p>
                       )}
-                      {/* Отзывы для локации (показываем всегда, если нет привязанной активности, или если это сама локация) */}
                       {!locationDetail.activity_id && locationDetail.location_id && (
                           <ReviewList
                              targetId={locationDetail.location_id}

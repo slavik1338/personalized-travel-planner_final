@@ -138,16 +138,6 @@ TRAVEL_STYLE_KEYWORDS_FALLBACK = {
 
 
 def extract_travel_info(text: str) -> Dict[str, Any]:
-    """
-    Processes the text part of the user query using NLP and ML models,
-    extracting interests, travel style, destination, and raw entities.
-
-    Args:
-        text: The free text part of the user query.
-
-    Returns:
-        A dictionary with extracted parameters (excluding dates and budget).
-    """
     dates: Optional[Union[str, Tuple[date, date], timedelta]] = None
     budget: Optional[float] = None
     destinations: set[str] = set()
